@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import colorsys
+
+# Step 1: Input data
+artworks = [
+    ("Lucy 1", "#9c0e0e"),
+    ("Lucy 2", "#9c0e0e"),
+    ("Lucy 3", "#9c0e0e"),
+    ("Lucy 4", "#9c0e0e"),
+    ("Lucy 5", "#9c0e0e"),
+    ("Eleanor 2", "#b88954"),
+    ("Ayasha", "#a9e39f"),
+    ("Ari", "#1a261c"),
+    ("Emily 1", "#031e17"),
+    ("Emily 2", "#022626"),
+    ("Eleanor 1", "#0b2e3e"),
+    ("Wonseok", "#356acc")
+]
+
+# Step 2: Convert HEX to Hue
+def hex_to_hue(hex_color):
+    hex_color = hex_color.lstrip('#')
+    r, g, b = [int(hex_color[i:i+2], 16)/255.0 for i in (0, 2, 4)]
+    h, _, _ = colorsys.rgb_to_hsv(r, g, b)
+    return h * 360
+
+# Step 3: Sort by hue
+artworks_with_hue = [(name, hex_code, hex_to_hue(hex_code)) for name, hex_code in artworks]
+artworks_sorted = sorted(artworks_with_hue, key=lambda x: x[2])
+
+# Step 4: Plot circular hue wheel
+fig, ax = plt.subplots(figsize=(8, 8), subplot_kw={'projection': 'polar'})
+
+for name, hex_code, hue in artworks_sorted:
+    hue_rad = np.deg2rad(hue)
+    ax.plot(hue_rad, 1, 'o', markersize=10, label=name, color=hex_code)
+
+# Format plot
+ax.set_rticks([])
+ax.set_theta_zero_location('N')
+ax.set_theta_direction(-1)
+ax.set_title("Artwork Layout by Dominant Hue", va='bottom')
+ax.legend(bbox_to_anchor=(1.1, 1.05), loc='upper left')
+plt.tight_layout()
+plt.show()
