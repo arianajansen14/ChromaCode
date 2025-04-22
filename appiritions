@@ -74,13 +74,3 @@ ax.legend(handles=legend_handles, bbox_to_anchor=(1.04, 1), loc='upper left', bo
 
 ax.set_xlim(0, 7)
 ax.set_ylim(0, 5)
-ax.set_aspect('equal')
-ax.axis('on')
-ax.set_facecolor('#f5f5f5')
-ax.tick_params(axis='both', labelsize=8, labelcolor='gray', direction='in')
-ax.set_title("Hue-Sorted Exhibition Floorplan (Technical View)", fontsize=13, fontfamily='monospace', pad=20)
-
-plt.tight_layout()
-plt.show()
-
-
